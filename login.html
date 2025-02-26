@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Management - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background">
+        <canvas id="networkCanvas"></canvas> <!-- Background Animation -->
+    </div>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Supply Chain Management Portal</h2>
+            <p class="subtext">Blockchain-Powered Secure Access</p>
+
+            <form>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+                <p class="register-link">Don't have an account? <a href="signup.html">Sign Up</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="scripts/login.js"></script>
+
+    <script >
+        const canvas = document.getElementById("networkCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+
+class Particle {
+    constructor(x, y, size, speedX, speedY) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+    }
+    draw() {
+        ctx.fillStyle = "cyan";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+    }
+}
+
+function init() {
+    for (let i = 0; i < 50; i++) {
+        const size = Math.random() * 3 + 1;
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const speedX = Math.random() * 2 - 1;
+        const speedY = Math.random() * 2 - 1;
+        particles.push(new Particle(x, y, size, speedX, speedY));
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const particle of particles) {
+        particle.update();
+        particle.draw();
+    }
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();
+
+    </script>
+</body>
+</html>
